@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     // Note: Yahan apni Render wali asli link dalna mat bhulna
-    axios.get('https://bansari-site.vercel.app/').then(res => {
+    axios.get('https://bansari-site.vercel.app/api/posts').then(res => {
       setPosts(res.data);
     });
   }, []);

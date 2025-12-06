@@ -27,7 +27,7 @@ const AdminPanel = () => {
     formData.append("category", category);
 
     try {
-      await axios.post('https://bansari-site.vercel.app/', formData);
+      await axios.post('https://bansari-site.vercel.app/api/upload', formData);
       alert("Uploaded Successfully!");
       setLoading(false);
       // Reset form logic here
