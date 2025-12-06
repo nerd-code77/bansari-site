@@ -1,0 +1,7 @@
+{
+  "name": "bansari-site",
+  "private": true,
+  "scripts": {
+    "vercel-build": "cd client && npm install && npm run build"
+  }
+}

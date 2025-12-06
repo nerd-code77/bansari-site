@@ -1,5 +1,3 @@
 {
-  "buildCommand": "cd client && npx vite build",
-  "outputDirectory": "client/dist",
-  "installCommand": "cd client && npm install"
+  "outputDirectory": "client/dist"
 }
