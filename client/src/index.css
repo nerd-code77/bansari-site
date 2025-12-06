@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Thoda sa extra style scrollbar ke liye */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f3f4f6;
+}
