@@ -9,8 +9,8 @@ const multer = require('multer');
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: ["https://bansari-site-client.vercel.app", "https://bansari-site.vercel.app"], // Dono allow kar diye safety ke liye
-    methods: ["GET", "POST", "DELETE"],
+    origin: "*",  
+    methods: ["GET", "POST", "DELETE", "PUT"], // PUT add karna zaroori hai update ke liye
     credentials: true
 }));
 
