@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git push:*)",
       "Bash(git commit -m \"$(cat <<''EOF''\nFix Vercel permission denied error\n\n- Changed from ''cd client &&'' to ''npm --prefix client'' approach\n- This avoids shell permission issues in Vercel''s build environment\n- Re-added installCommand with proper npm prefix syntax\n\nResolves: sh: line 1: /vercel/path0/client/node_modules/.bin/vite: Permission denied\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
