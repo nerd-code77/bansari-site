@@ -55,15 +55,16 @@ const Home = () => {
       <section className="py-20 px-6 bg-white flex flex-col md:flex-row items-center gap-10 max-w-6xl mx-auto">
         <div className="md:w-1/2">
             {/* Note: Ensure this image exists in public folder */}
-            <img src="/bansari-profile.jpg" alt="Bansari Datt" className="rounded-lg shadow-2xl border-l-8 border-orange-500" />
+            <img src="/bansari-profile.jpg" alt="Bansari Datt" className="rounded-lg shadow-2xl border-l-8 border-orange-500" /> 
         </div>
         <div className="md:w-1/2">
             <h2 className="text-4xl font-bold text-blue-900 mb-4">Meet Bansari Datt</h2>
-            <h3 className="text-xl text-orange-600 font-semibold mb-4">B.Tech Student | SAL Institute | Leader</h3>
+            <h3 className="text-xl text-orange-600 font-semibold mb-4">B.Tech Student | SAL Institute | Researcher</h3>
             <p className="text-gray-600 leading-relaxed mb-6">
-                Namaste! Main Bansari Datt hoon. Mera mission hai SAL Institute ke students ki aawaz banna. 
-                Chahe academic issues hon ya cultural activities, main hamesha aapke sath khadi hoon.
-                Aane wale election mein aapka saath chahiye badlaav ke liye.
+                Namaste! I am Bansari Datt. My journey at SAL Institute is defined by a passion for research and academic excellence.
+                I believe in bridging the gap between theoretical knowledge and practical innovation.
+                I am dedicated to fostering a culture where technology meets creativity,
+                working alongside students to push boundaries in our field.
             </p>
             <button className="bg-orange-500 text-white px-8 py-3 rounded-full font-bold hover:bg-orange-600 transition">
                 Join the Movement
