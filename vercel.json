@@ -1,5 +1,5 @@
 {
-  "buildCommand": "ls -la && cd client && npm install && npm run build",
-  "outputDirectory": "client/dist",
-  "installCommand": "ls -la"
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install"
 }
