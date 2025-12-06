@@ -1,6 +1,7 @@
 {
-  "buildCommand": "cd client && npm run build",
-  "devCommand": "cd client && npm run dev",
+  "buildCommand": "npm --prefix client run build",
+  "devCommand": "npm --prefix client run dev",
+  "installCommand": "npm --prefix client install",
   "framework": "vite",
   "outputDirectory": "client/dist"
 }
