@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     // Note: Yahan apni Render wali asli link dalna mat bhulna
-    axios.get('https://vercel.com/dhiraj-singhs-projects-643e8126/bansari-site/3QiPPWbgSSUnzXVEq9RsLaaoJt73').then(res => {
+    axios.get('https://bansari-site.vercel.app/').then(res => {
       setPosts(res.data);
     });
   }, []);
