@@ -8,60 +8,73 @@ const multer = require('multer');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: ["https://bansari-site-client.vercel.app", "https://bansari-site.vercel.app"], // Dono allow kar diye safety ke liye
+    methods: ["GET", "POST", "DELETE"],
+    credentials: true
+}));
 
-// 1. Database Connection
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
-
-// 2. Cloudinary Config
+// Cloudinary Config
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_API_SECRET
 });
 
-// Storage Engine
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: 'bansari_election',
-  },
+  params: { folder: 'bansari_election' },
 });
 const upload = multer({ storage: storage });
 
-// 3. Schema (Data Structure)
+// Schema
 const PostSchema = new mongoose.Schema({
   title: String,
   description: String,
-  imageUrl: String, // Cloudinary URL yaha aayega
-  category: String, // 'hero-slider' ya 'work-gallery'
+  imageUrl: String,
+  category: String,
   date: { type: Date, default: Date.now }
 });
-
 const Post = mongoose.model('Post', PostSchema);
 
-// 4. API Routes
+// --- SMART DATABASE CONNECTION (Ye Naya Hai) ---
+let isConnected = false; 
+const connectDB = async () => {
+    if (isConnected) return;
+    try {
+        const db = await mongoose.connect(process.env.MONGO_URI, {
+            serverSelectionTimeoutMS: 5000 // 5 second se zyada wait na kare
+        });
+        isConnected = db.connections[0].readyState;
+        console.log("MongoDB Connected Successfully");
+    } catch (error) {
+        console.log("MongoDB Connection Error:", error);
+    }
+};
 
-// Post Upload (Admin Only)
+// --- ROUTES ---
+
+// Upload Route
 app.post('/api/upload', upload.single('image'), async (req, res) => {
+  await connectDB(); // Har request se pehle connect confirm karega
   try {
     const newPost = new Post({
       title: req.body.title,
       description: req.body.description,
       category: req.body.category,
-      imageUrl: req.file.path // Cloudinary se mila hua path
+      imageUrl: req.file.path
     });
     await newPost.save();
     res.status(200).json(newPost);
   } catch (err) {
+    console.error(err);
     res.status(500).json(err);
   }
 });
 
-// Get All Posts (Public)
+// Get Posts Route
 app.get('/api/posts', async (req, res) => {
+  await connectDB();
   try {
     const posts = await Post.find().sort({ date: -1 });
     res.status(200).json(posts);
@@ -69,9 +82,30 @@ app.get('/api/posts', async (req, res) => {
     res.status(500).json(err);
   }
 });
+// --- Update Route (Edit Text) ---
+app.put('/api/posts/:id', async (req, res) => {
+  await connectDB();
+  try {
+    // Hum sirf Title, Description aur Category update kar rahe hain
+    // (Agar photo badalni hai to purani delete karke nayi upload karna behtar hai)
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.id, 
+      {
+        title: req.body.title,
+        description: req.body.description,
+        category: req.body.category
+      },
+      { new: true } // Ye option batata hai ki update hone ke baad naya data wapis bhejo
+    );
+    res.status(200).json(updatedPost);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// Delete Post (Admin Only)
+// Delete Route
 app.delete('/api/posts/:id', async (req, res) => {
+  await connectDB();
   try {
     await Post.findByIdAndDelete(req.params.id);
     res.status(200).json("Post deleted");
@@ -81,9 +115,7 @@ app.delete('/api/posts/:id', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-
 if (require.main === module) {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
-
 module.exports = app;
