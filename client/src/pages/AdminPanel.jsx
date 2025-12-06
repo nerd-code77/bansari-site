@@ -27,7 +27,7 @@ const AdminPanel = () => {
     formData.append("category", category);
 
     try {
-      await axios.post('YOUR_RENDER_BACKEND_URL/api/upload', formData);
+      await axios.post('https://vercel.com/dhiraj-singhs-projects-643e8126/bansari-site/3QiPPWbgSSUnzXVEq9RsLaaoJt73', formData);
       alert("Uploaded Successfully!");
       setLoading(false);
       // Reset form logic here
